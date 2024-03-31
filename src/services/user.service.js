@@ -1,0 +1,28 @@
+import axios from 'axios';
+import authHeader from './auth-header';
+
+const API_URL = 'http://localhost:3000/';
+
+class UserService {
+  getPublicContent() {
+    // return axios.get(API_URL + 'all');
+    return axios.get(API_URL + 'validate', { headers: authHeader() });
+  }
+
+  getAdministratorBoard() {
+    // return axios.get(API_URL + 'user', { headers: authHeader() });
+    return axios.get(API_URL + 'validate', { headers: authHeader() });
+  }
+
+  getGuideBoard() {
+    // return axios.get(API_URL + 'company-admin', { headers: authHeader() });
+    return axios.get(API_URL + 'validate', { headers: authHeader() });
+  }
+
+  getTouristBoard() {
+    // return axios.get(API_URL + 'system-admin', { headers: authHeader() });
+    return axios.get(API_URL + 'validate', { headers: authHeader() });
+  }
+}
+
+export default new UserService();
