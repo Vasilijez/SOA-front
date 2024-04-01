@@ -23,6 +23,9 @@ class UserService {
     // return axios.get(API_URL + 'system-admin', { headers: authHeader() });
     return axios.get(API_URL + 'validate', { headers: authHeader() });
   }
+  getUserBy(id){
+    return axios.get(API_URL + id, { headers: authHeader() })
+  }
 }
 
 export default new UserService();
