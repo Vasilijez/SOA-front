@@ -11,6 +11,7 @@ import Profile from "./components/profile.component";
 import BoardAdministrator from "./components/board-administrator.component";
 import BoardGuide from "./components/board-guide.component";
 import BoardTourist from "./components/board-tourist.component";
+import userFeed from "./components/userFeed";
 
 class App extends Component {
   constructor(props) {
@@ -81,6 +82,11 @@ class App extends Component {
                 Home
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/feed"} className="nav-link">
+                Feed
+              </Link>
+            </li>
 
             {showAdministratorBoard && (
               <li className="nav-item">
@@ -147,6 +153,7 @@ class App extends Component {
             <Route path="/administrator" component={BoardAdministrator} />
             <Route path="/guide" component={BoardGuide} />
             <Route path="/tourist" component={BoardTourist} />
+            <Route exact path="/feed" component={userFeed} />
           </Switch>
         </div>
       </div>
