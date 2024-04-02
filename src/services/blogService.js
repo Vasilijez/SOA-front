@@ -9,10 +9,6 @@ class blogService {
     // return axios.get(API_URL + 'all');
     return axios.get(API_URL + 'feed', { headers: authHeader() });
   }
-
-  getUserBy(id){
-    return axios.get(API_URL + id, { headers: authHeader() })
-  }
 }
 
 export default new blogService();
