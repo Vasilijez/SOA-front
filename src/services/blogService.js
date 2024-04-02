@@ -9,6 +9,9 @@ class blogService {
     // return axios.get(API_URL + 'all');
     return axios.get(API_URL + 'feed');
   }
+  getCommentsByBlog(id){
+    return axios.get(API_URL + "blogs/" + id + "/comments")
+  }
 }
 
 export default new blogService();
