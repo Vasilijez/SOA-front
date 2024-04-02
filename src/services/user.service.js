@@ -23,6 +23,15 @@ class UserService {
     // return axios.get(API_URL + 'system-admin', { headers: authHeader() });
     return axios.get(API_URL + 'validate', { headers: authHeader() });
   }
+  getUserBy(id){
+    return axios.get(API_URL + id, { headers: authHeader() })
+  }
+  follow(username){
+    return axios.post(API_URL + "follow/" + username,{}, { headers: authHeader() })
+  }
+  checkIfFollows(loggedInUserId, userToFollowId){
+    return axios.get(API_URL +"does-follow/" + loggedInUserId + "/" +userToFollowId, { headers: authHeader() })
+  }
 }
 
 export default new UserService();
