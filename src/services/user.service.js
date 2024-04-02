@@ -31,7 +31,9 @@ class UserService {
   }
   checkIfFollows(loggedInUserId, userToFollowId){
     return axios.get(API_URL +"does-follow/" + loggedInUserId + "/" +userToFollowId, { headers: authHeader() })
-  }
+  }  
+  getFollowedUsers(){
+    return axios.get(API_URL + 'get-followed' , { headers: authHeader() })
 }
-
+}
 export default new UserService();

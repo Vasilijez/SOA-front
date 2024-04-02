@@ -13,14 +13,15 @@ class userFeed extends Component {
             blogs : [],
             users: [],
             blogsWithUsers : [],
+            followedUsersIds: [], // Initialize as an empty array        }
+
         }
 
     }
 
     componentDidMount() {
+        this.fetchFollowedUsers();
         this.fetchBlogs();
-        
-
     }
 
     fetchBlogs = () => {
@@ -62,11 +63,36 @@ class userFeed extends Component {
     Follow(username){
         userService.follow(username)
     }
+
+    fetchFollowedUsers() {
+        UserService.getFollowedUsers().then(
+            response => {
+                console.log("Response for followed users:", response.data);
+                // Check if the response data contains the expected followed_user_ids field
+                if (response.data && Array.isArray(response.data.followed_user_ids)) {
+                    this.setState({
+                        followedUsersIds: response.data.followed_user_ids
+                    });
+                } else {
+                    // Handle the case when the response data is not as expected
+                    console.error('Invalid response format for followed users');
+                }
+            },
+            error => {
+                this.setState({
+                    content:
+                        (error.response && error.response.data && error.response.data.message) ||
+                        error.message ||
+                        error.toString()
+                });
+            }
+        );
+    }
+    
     
     render() {
-        const { blogsWithUsers } = this.state;
+        const { blogsWithUsers, followedUsersIds } = this.state;
         const loggedInUserId = JSON.parse(localStorage.getItem('user')).id;
-        const loggedInUserName = JSON.parse(localStorage.getItem('user')).username;
     
         return (
             <div>
@@ -74,12 +100,19 @@ class userFeed extends Component {
                 {blogsWithUsers.map((blogWithUser) => (
                     <div key={blogWithUser.blog.id} style={{ marginBottom: '20px', border: '1px solid #ccc', padding: '10px' }}>
                         <h2>{blogWithUser.blog.title}</h2>
-                        <p> {blogWithUser.blog.description}</p>
+                        <p>{blogWithUser.blog.description}</p>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <p style={{ marginRight: '10px' }}><strong>Posted by:</strong> {blogWithUser.user.username}</p>
                             {/* Conditionally render the Follow button as disabled if the logged-in user posted the blog */}
                             {blogWithUser.blog['user id'] !== loggedInUserId && (
-                                <button style={{ marginBottom: '20px' }} onClick={() => this.Follow(blogWithUser.user.username)} className='btn-btn-info'>Follow</button>
+                                <button
+                                    style={{ marginBottom: '20px' }}
+                                    onClick={() => this.Follow(blogWithUser.user.username)}
+                                    className='btn-btn-info'
+                                    disabled={followedUsersIds.includes(blogWithUser.blog['user id'])}
+                                >
+                                    {followedUsersIds.includes(blogWithUser.blog['user id']) ? 'Following' : 'Follow'}
+                                </button>
                             )}
                             {blogWithUser.blog['user id'] === loggedInUserId && (
                                 <button style={{ marginBottom: '20px' }} disabled className='btn-btn-info'>You</button>
@@ -90,5 +123,6 @@ class userFeed extends Component {
             </div>
         );
     }
+    
 }    
 export default userFeed;

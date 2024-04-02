@@ -7,7 +7,7 @@ class blogService {
 
   getAllBlogs() {
     // return axios.get(API_URL + 'all');
-    return axios.get(API_URL + 'feed', { headers: authHeader() });
+    return axios.get(API_URL + 'feed');
   }
 }
 
