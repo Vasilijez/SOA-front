@@ -12,6 +12,7 @@ import BoardAdministrator from "./components/board-administrator.component";
 import BoardGuide from "./components/board-guide.component";
 import BoardTourist from "./components/board-tourist.component";
 import userFeed from "./components/userFeed";
+import CreateBlog from "./components/create-blog.component"
 
 class App extends Component {
   constructor(props) {
@@ -154,6 +155,7 @@ class App extends Component {
             <Route path="/guide" component={BoardGuide} />
             <Route path="/tourist" component={BoardTourist} />
             <Route exact path="/feed" component={userFeed} />
+            <Route exact path="/create-blog" component={CreateBlog}/>
           </Switch>
         </div>
       </div>
