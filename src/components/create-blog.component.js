@@ -3,7 +3,7 @@ import React, { Component, useState } from 'react';
 import BlogService from '../services/blogService';
 
 
-class CreateCompanyComponent extends Component {
+class CreateBlogComponent extends Component {
     
 
     constructor(props){
@@ -17,7 +17,7 @@ class CreateCompanyComponent extends Component {
         this.changeTitleHandler = this.changeTitleHandler.bind(this);
         this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
 
-        // this.saveBlog = this.saveBlog.bind(this);
+        this.saveBlog = this.saveBlog.bind(this);
     }
 
     changeTitleHandler=(event) =>{
@@ -28,40 +28,25 @@ class CreateCompanyComponent extends Component {
         this.setState({description: event.target.value});
     }
 
-    // saveBlog= async(e) =>{
-    //     e.preventDefault();
-
-    //     if(this.state.openingTime === null){
-    //         console.log('Warning: Opening time is empty.');
-    //         return; 
-    //     }
-
-    //     if(this.state.closingTime === null){
-    //         console.log('Warning: Closing time is empty.');
-    //         return; 
-    //     }
-
-    //     if(this.state.openingTime.isAfter(this.state.closingTime)){
-    //         console.log('Error: Opening time cannot be after closing time.');
-    //         return;
-    //     }
-        
-    //     let company = {name: this.state.title, description: this.state.description, country: this.state.country, 
-    //                    city: this.state.city, streetName: this.state.streetName, streetNumber: this.state.streetNumber,
-    //                    openingTime: this.state.openingTime, closingTime: this.state.closingTime};
-    //     console.log('company =>' + JSON.stringify(company));
-
-    //     try{
-    //         await CompanyService.createCompany(company);
-
-    //         this.props.history.push('/api/companies');
-    //     }catch(error){
-    //         console.error('Error creating company:', error);
-    //     }
-        
-        
-    //     //window.location.reload(); // jer nece da mi ucita komponent koji je na /api/companies putanji
-    // }
+    saveBlog = async (e) => {
+        e.preventDefault();
+    
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.id) {
+            console.error('User data not found in localStorage or missing user ID');
+            return;
+        }
+    
+        const blog = { userID: user.id, title: this.state.title, description: this.state.description };
+        console.log('blog =>', blog);
+    
+        try {
+            await BlogService.createBlog(blog);
+            this.props.history.push('/feed');
+        } catch (error) {
+            console.error('Error creating blog:', error);
+        }
+    }
 
     render() {
         const buttonStyle = {
@@ -87,12 +72,7 @@ class CreateCompanyComponent extends Component {
                                                 value={this.state.description} onChange={this.changeDescriptionHandler}/>
                                     </div>
 
-                                    
-                                        
-                                    {/* <button className='btn btn-success' onClick={this.saveBlog} style={buttonStyle}>Publish</button>
-                                    <button className='btn btn-success' onClick={this.changeCitynHandler.bind(this)} style={{marginLeft: "10px"}}>
-                                        Cancel
-                                    </button> */}
+                                    <button className='btn btn-success' onClick={this.saveBlog} style={buttonStyle}>Publish</button>
                                 </form>
                             </div>
                         </div>
@@ -102,4 +82,4 @@ class CreateCompanyComponent extends Component {
     }
 }
 
-export default CreateCompanyComponent;
+export default CreateBlogComponent;

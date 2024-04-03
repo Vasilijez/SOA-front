@@ -12,6 +12,11 @@ class blogService {
   getCommentsByBlog(id){
     return axios.get(API_URL + "blogs/" + id + "/comments")
   }
+  createBlog(blog){
+    // console.log('blog =>', blog);
+    // console.log('AAAAAAAAAA');
+    return axios.post(API_URL + "blogs/create", blog, { headers: authHeader() });
+  }
 }
 
 export default new blogService();
