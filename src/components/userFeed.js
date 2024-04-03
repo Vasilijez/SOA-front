@@ -116,20 +116,19 @@ class userFeed extends Component {
     this.setState({ newCommentText: event.target.value });
   };
 
-  handleSubmitComment = (blogId) => {
+  handleSubmitComment = (event, blogId) => {
+    event.preventDefault();
+
     const { newCommentText } = this.state;
     const commentData = {
-      text: newCommentText,
-      // Assuming you have the user ID stored in localStorage
       userId: JSON.parse(localStorage.getItem('user')).id,
-      // Assuming you have a timestamp for the comment
-      timestamp: new Date().toISOString(),
+      blogID : blogId,
+      text: newCommentText
     };
 
-    blogService.addCommentToBlog(blogId, commentData).then((res) => {
-      // Update the comments for the blog after adding the new comment
-      this.fetchCommentsForBlogs();
-      // Clear the new comment text field
+    blogService.addCommentToBlog(commentData).then((res) => {
+      //this.fetchCommentsForBlogs();
+
       this.setState({ newCommentText: '' });
     });
   };
@@ -154,7 +153,7 @@ class userFeed extends Component {
                 </div>
               ))}
             {/* Form to add a new comment */}
-            <form onSubmit={() => this.handleSubmitComment(blogWithUser.blog.id)}>
+            <form onSubmit={(event) => this.handleSubmitComment(event, blogWithUser.blog.id)}>
               <input
                 type="text"
                 value={newCommentText}
