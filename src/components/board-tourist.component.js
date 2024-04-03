@@ -11,6 +11,8 @@ export default class BoardTourist extends Component {
     this.state = {
       content: ""
     };
+
+    this.createBlog = this.createBlog.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +43,12 @@ export default class BoardTourist extends Component {
       }
     );
   }
+
+  createBlog= async(e) =>{
+    e.preventDefault();
+
+    this.props.history.push('/create-blog');
+  }
   
   render() {
     return (
@@ -48,6 +56,8 @@ export default class BoardTourist extends Component {
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
         </header>
+
+        <button className='btn btn-success' onClick={this.createBlog}>Create a blog</button>
       </div>
     );
   }

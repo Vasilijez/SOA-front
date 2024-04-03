@@ -11,6 +11,8 @@ export default class BoardGuide extends Component {
     this.state = {
       content: ""
     };
+
+    this.updateCompany = this.updateCompany.bind(this);
   }
 
   componentDidMount() {
@@ -42,12 +44,20 @@ export default class BoardGuide extends Component {
     );
   }
 
+  updateCompany= async(e) =>{
+    e.preventDefault();
+
+    this.props.history.push('/create-blog');
+  }
+
   render() {
     return (
       <div className="container">
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
         </header>
+
+        <button className='btn btn-success' onClick={this.updateCompany}>Create a blog</button>
       </div>
     );
   }
