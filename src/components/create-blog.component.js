@@ -37,7 +37,7 @@ class CreateBlogComponent extends Component {
             return;
         }
     
-        const blog = { userID: user.id, title: this.state.title, description: this.state.description };
+        const blog = { userId: user.id, title: this.state.title, description: this.state.description };
         console.log('blog =>', blog);
     
         try {
@@ -67,7 +67,7 @@ class CreateBlogComponent extends Component {
                                     </div>
 
                                     <div>
-                                        <label>Company description: </label>
+                                        <label>Blog description: </label>
                                         <input placeholder='Description' name='description' className='form-control'
                                                 value={this.state.description} onChange={this.changeDescriptionHandler}/>
                                     </div>

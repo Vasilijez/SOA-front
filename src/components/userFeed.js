@@ -39,7 +39,7 @@ class userFeed extends Component {
 
     // Fetch user data for each blog
     blogs.forEach((blog) => {
-      const promise = UserService.getUserBy(blog['user id']);
+      const promise = UserService.getUserBy(blog.userId);
       promises.push(promise);
     });
 
@@ -86,7 +86,15 @@ class userFeed extends Component {
   };
 
   Follow(username) {
-    userService.follow(username);
+    userService.follow(username)
+      .then(() => {
+        // Reload the page after successfully following the user
+        window.location.reload();
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error('Error following user:', error);
+      });
   }
 
   fetchFollowedUsers() {
@@ -116,18 +124,21 @@ class userFeed extends Component {
     this.setState({ newCommentText: event.target.value });
   };
 
+
+
   handleSubmitComment = (event, blogId) => {
     event.preventDefault();
 
     const { newCommentText } = this.state;
     const commentData = {
       userId: JSON.parse(localStorage.getItem('user')).id,
-      blogID : blogId,
+      blogId : blogId,
       text: newCommentText
     };
+    console.log('comment =>', commentData);
 
     blogService.addCommentToBlog(commentData).then((res) => {
-      //this.fetchCommentsForBlogs();
+      this.fetchCommentsForBlogs();
 
       this.setState({ newCommentText: '' });
     });
@@ -153,6 +164,7 @@ class userFeed extends Component {
                 </div>
               ))}
             {/* Form to add a new comment */}
+            {blogWithUser.blog.userId !== loggedInUserId && ( // Check if the logged-in user did not post the blog
             <form onSubmit={(event) => this.handleSubmitComment(event, blogWithUser.blog.id)}>
               <input
                 type="text"
@@ -160,24 +172,45 @@ class userFeed extends Component {
                 onChange={this.handleCommentChange}
                 placeholder="Add a comment..."
               />
-              <button type="submit">Add Comment</button>
+              <button 
+                type="submit" 
+                disabled={!followedUsersIds.includes(blogWithUser.blog.userId) && loggedInUserId !== blogWithUser.blog.userId} // Disable button if the user hasn't followed the author and it's not their own post
+              >
+                Add Comment
+              </button>
             </form>
+            )}
+          {blogWithUser.blog.userId === loggedInUserId && ( // Allow the logged-in user to comment on their own posts
+            <form onSubmit={(event) => this.handleSubmitComment(event, blogWithUser.blog.id)}>
+              <input
+                type="text"
+                value={newCommentText}
+                onChange={this.handleCommentChange}
+                placeholder="Add a comment..."
+              />
+              <button 
+                type="submit"
+              >
+                Add Comment
+              </button>
+            </form>
+            )}
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <p style={{ marginRight: '10px' }}>
                 <strong>Posted by:</strong> {blogWithUser.user.username}
               </p>
               {/* Conditionally render the Follow button as disabled if the logged-in user posted the blog */}
-              {blogWithUser.blog['user id'] !== loggedInUserId && (
+              {blogWithUser.blog.userId !== loggedInUserId && (
                 <button
                   style={{ marginBottom: '20px' }}
                   onClick={() => this.Follow(blogWithUser.user.username)}
                   className='btn-btn-info'
-                  disabled={followedUsersIds.includes(blogWithUser.blog['user id'])}
+                  disabled={followedUsersIds.includes(blogWithUser.blog.userId)}
                 >
-                  {followedUsersIds.includes(blogWithUser.blog['user id']) ? 'Following' : 'Follow'}
+                  {followedUsersIds.includes(blogWithUser.blog.userId) ? 'Following' : 'Follow'}
                 </button>
               )}
-              {blogWithUser.blog['user id'] === loggedInUserId && (
+              {blogWithUser.blog.userId === loggedInUserId && (
                 <button style={{ marginBottom: '20px' }} disabled className='btn-btn-info'>
                   You
                 </button>
