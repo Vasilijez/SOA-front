@@ -13,6 +13,7 @@ import BoardGuide from "./components/board-guide.component";
 import BoardTourist from "./components/board-tourist.component";
 import userFeed from "./components/userFeed";
 import CreateBlog from "./components/create-blog.component"
+import GuideMyTours from "./components/guideMyTours.component";
 
 class App extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class App extends Component {
     //   this.setState({
     //     currentUser: user,
     //     showCompanyAdminBoard: user.roles.includes("ROLE_COMPANY_ADMIN"),
-    //     showSystemAdminBoard: user.roles.includes("ROLE_SYSTEM_ADMIN"),
+    //     showSystemAdminBoa rd: user.roles.includes("ROLE_SYSTEM_ADMIN"),
     //   });
     // }
     
@@ -43,7 +44,7 @@ class App extends Component {
       this.setState({
         currentUser: user,
         userReady: true,
-        showGuideBoard: user.role === 1,
+          showGuideBoard: user.role === 1,
         showTouristBoard: user.role === 2,
         showAdministratorBoard: user.role === 3
       })
@@ -70,7 +71,7 @@ class App extends Component {
 
   render() {
     const { currentUser, showAdministratorBoard, showTouristBoard, showGuideBoard } = this.state;
-
+    
     return (
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -86,6 +87,11 @@ class App extends Component {
             <li className="nav-item">
               <Link to={"/feed"} className="nav-link">
                 Feed
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/my-tours"} className="nav-link">
+                My Tours
               </Link>
             </li>
 
@@ -156,6 +162,7 @@ class App extends Component {
             <Route path="/tourist" component={BoardTourist} />
             <Route exact path="/feed" component={userFeed} />
             <Route exact path="/create-blog" component={CreateBlog}/>
+            <Route exact path="/my-tours" component={GuideMyTours}/>
           </Switch>
         </div>
       </div>

@@ -49,6 +49,11 @@ export default class BoardGuide extends Component {
 
     this.props.history.push('/create-blog');
   }
+  showMyTours= async(e) =>{
+    e.preventDefault();
+
+    this.props.history.push('/my-tours');
+  }
 
   render() {
     return (
