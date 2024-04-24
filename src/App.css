@@ -122,3 +122,19 @@ label {
   background-color: green;
   color: white;
 }
+
+.leaflet-container {  width: 50%;  height: 200px;}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.leaflet-container {
+  height: 80vh;
+  width: 70%;
+  border-radius: 0;
+}

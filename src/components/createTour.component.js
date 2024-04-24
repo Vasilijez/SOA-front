@@ -13,7 +13,7 @@ class TourForm extends Component {
             price: 0.0,
             userId: JSON.parse(localStorage.getItem('user')).id,
             keyPoints: [],
-            newKeyPoint: { name: '', longitude: 0.0, latitude: 0.0},
+            newKeyPoint: {longitude: 0.0, latitude: 0.0},
         };
     }
 
@@ -27,16 +27,16 @@ class TourForm extends Component {
         this.setState({ type: parseInt(e.target.value) });
     }
 
-    handleAddKeyPoint = () => {
-        const { newKeyPoint, keyPoints } = this.state;
-        if (newKeyPoint.name && newKeyPoint.longitude && newKeyPoint.latitude) {
-            this.setState({
-                keyPoints: [...keyPoints, newKeyPoint],
-                newKeyPoint: { name: '', longitude: 0, latitude: 0},
-            });
-        }
+    handleAddKeyPoint = (latitude, longitude) => {
+        const { keyPoints } = this.state; 
+        this.setState({
+            keyPoints: [...keyPoints, { latitude, longitude }],
+            newKeyPoint: { latitude: 0, longitude: 0 },
+        });
     }
-
+    
+    
+    
     handleKeyPointChange = (e) => {
         const { newKeyPoint } = this.state;
         let value = e.target.value;
@@ -51,6 +51,7 @@ class TourForm extends Component {
     }
     
 
+    
     handleSubmit = (e) => {
         e.preventDefault();
         const { name, description, type, tags, price, userId, keyPoints } = this.state;
@@ -68,7 +69,7 @@ class TourForm extends Component {
                     price: 0,
                     userId: JSON.parse(localStorage.getItem('user')).id,
                     keyPoints: [],
-                    newKeyPoint: { name: '', longitude: 0, latitude: 0 },
+                    newKeyPoint: {longitude: 0, latitude: 0 },
                 });
             })
             .catch(error => {
@@ -94,13 +95,7 @@ class TourForm extends Component {
                 <input type="text" name="tags" value={tags} onChange={this.handleChange} />
                 <label>Price:</label>
                 <input type="number" name="price" value={price} onChange={this.handleChange} />
-                <label>Key Points:</label>
-                <ul>
-                    {keyPoints.map((kp, index) => (
-                        <li key={index}>{kp.name}</li>
-                    ))}
-                </ul>
-                <KeyPointInput
+                <KeyPointInput 
                     keyPoint={newKeyPoint}
                     onChange={this.handleKeyPointChange}
                     onAdd={this.handleAddKeyPoint}
