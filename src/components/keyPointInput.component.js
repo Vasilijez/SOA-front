@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useMapEvents } from 'react-leaflet';
-import { Icon} from 'leaflet';
+import { Icon } from 'leaflet';
 
-const KeyPointInput = ({ keyPoint, onChange, onAdd }) => {
+const KeyPointInput = ({ keyPoint, onChange, onAdd, onRemove }) => {
     const [clickedPosition, setClickedPosition] = useState(null);
     const [keyPoints, setKeyPoints] = useState([]);
-    
+
     const customIcon = new Icon({
         iconUrl: require("../location-pin.png"),
         iconSize: [38, 38]
@@ -31,6 +31,10 @@ const KeyPointInput = ({ keyPoint, onChange, onAdd }) => {
         }
     };
 
+    const handleRemoveKeyPoint = (latitude, longitude) => {
+        setKeyPoints(keyPoints.filter(point => point.latitude !== latitude || point.longitude !== longitude));
+    };
+
     return (
         <div>
             <MapContainer center={[48.8566, 2.3533]} zoom={13}>
@@ -44,6 +48,7 @@ const KeyPointInput = ({ keyPoint, onChange, onAdd }) => {
                         <Popup>
                             Latitude: {point.latitude}<br />
                             Longitude: {point.longitude}
+                            <button type='button' onClick={() => { onRemove(point.latitude, point.longitude); handleRemoveKeyPoint(point.latitude, point.longitude)}}>Remove Key Point</button>
                         </Popup>
                     </Marker>
                 ))}

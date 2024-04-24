@@ -34,8 +34,12 @@ class TourForm extends Component {
             newKeyPoint: { latitude: 0, longitude: 0 },
         });
     }
-    
-    
+
+    handleRemoveKeyPoint = (latitude, longitude) => {
+        const { keyPoints } = this.state;
+        const updatedKeyPoints = keyPoints.filter(point => point.latitude !== latitude || point.longitude !== longitude);
+        this.setState({ keyPoints: updatedKeyPoints });
+    }
     
     handleKeyPointChange = (e) => {
         const { newKeyPoint } = this.state;
@@ -49,7 +53,6 @@ class TourForm extends Component {
             newKeyPoint: { ...newKeyPoint, [e.target.name]: value },
         });
     }
-    
 
     
     handleSubmit = (e) => {
@@ -99,6 +102,7 @@ class TourForm extends Component {
                     keyPoint={newKeyPoint}
                     onChange={this.handleKeyPointChange}
                     onAdd={this.handleAddKeyPoint}
+                    onRemove={this.handleRemoveKeyPoint}
                 />
                 <button type="submit">Create Tour</button>
             </form>
