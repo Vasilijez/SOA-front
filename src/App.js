@@ -14,6 +14,7 @@ import BoardTourist from "./components/board-tourist.component";
 import userFeed from "./components/userFeed";
 import CreateBlog from "./components/create-blog.component"
 import GuideMyTours from "./components/guideMyTours.component";
+import TourForm from "./components/createTour.component";
 
 class App extends Component {
   constructor(props) {
@@ -94,6 +95,11 @@ class App extends Component {
                 My Tours
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/create-tour"} className="nav-link">
+                Create A Tour
+              </Link>
+            </li>
 
             {showAdministratorBoard && (
               <li className="nav-item">
@@ -163,6 +169,7 @@ class App extends Component {
             <Route exact path="/feed" component={userFeed} />
             <Route exact path="/create-blog" component={CreateBlog}/>
             <Route exact path="/my-tours" component={GuideMyTours}/>
+            <Route exact path="/create-tour" component={TourForm}/>
           </Switch>
         </div>
       </div>
