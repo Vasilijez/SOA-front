@@ -11,6 +11,16 @@ class TourService{
     createTour(blog){
         return axios.post(API_URL + "create-tour", blog, { headers: authHeader() })
     }
+    postReview(reviewData) {
+        console.log(reviewData)
+        return axios.post(API_URL + "postReview", reviewData, {
+            headers: {
+                ...authHeader(),
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+    
 }
 
 export default new TourService();

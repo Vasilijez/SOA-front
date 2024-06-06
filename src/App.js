@@ -85,44 +85,74 @@ class App extends Component {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
+            
+            
+            
+
+            {showAdministratorBoard && (
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={"/administrator"} className="nav-link">
+                    Administrator Board
+                  </Link>
+                </li>
+                <li className="nav-item">
+                <Link to={"/my-tours"} className="nav-link">
+                  Tours
+                </Link>
+              </li>
+              <li className="nav-item">
               <Link to={"/feed"} className="nav-link">
                 Feed
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to={"/my-tours"} className="nav-link">
-                My Tours
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/create-tour"} className="nav-link">
-                Create A Tour
-              </Link>
-            </li>
-
-            {showAdministratorBoard && (
-              <li className="nav-item">
-                <Link to={"/administrator"} className="nav-link">
-                  Administrator Board
-                </Link>
-              </li>
+            </div>
             )}
 
             {showTouristBoard && (
-              <li className="nav-item">
-                <Link to={"/tourist"} className="nav-link">
-                  Tourist Board
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={"/tourist"} className="nav-link">
+                    Tourist Board
+                  </Link>
+                </li>
+                <li className="nav-item">
+                <Link to={"/my-tours"} className="nav-link">
+                  Tours
                 </Link>
               </li>
+              <li className="nav-item">
+              <Link to={"/feed"} className="nav-link">
+                Feed
+              </Link>
+            </li>
+            </div>
+
             )}
 
             {showGuideBoard && (
-              <li className="nav-item">
-                <Link to={"/guide"} className="nav-link">
-                  Guide Board
-                </Link>
-              </li>
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={"/guide"} className="nav-link">
+                    Guide Board
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/create-tour"} className="nav-link">
+                    Create A Tour
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/my-tours"} className="nav-link">
+                    Tours
+                  </Link>
+                </li>
+                <li className="nav-item">
+              <Link to={"/feed"} className="nav-link">
+                Feed
+              </Link>
+            </li>
+              </div>
             )}
             
           </div>
