@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:3003/';
 class TourService{
 
     getToursByUser(id){
-        return axios.get(API_URL + "guide/" + id + "/tours")
+        return axios.get(API_URL + "guide/" + id + "/tours", { headers: authHeader() })
     }
     createTour(blog){
         return axios.post(API_URL + "create-tour", blog, { headers: authHeader() })
